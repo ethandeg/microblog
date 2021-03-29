@@ -4,6 +4,7 @@ import Header from "./Header"
 import Routes from "./Routes"
 import {useState} from "react"
 import { v4 as uuidv4 } from 'uuid';
+import PostContext from "./contexts/postContext"
 
 
 function App() {
@@ -18,10 +19,17 @@ function App() {
     setPosts(posts.filter(post => post.id !== id))
   }
 
+  const editPost = (updatedPost) => {
+    const newPosts = posts.filter(post => post.id !== updatedPost.id)
+    setPosts([...newPosts, updatedPost])
+  }
+
   return (
     <div className="App">
         <Header />
-        <Routes addPost={addPost} removePost={removePost} posts={posts}/>
+        <PostContext.Provider value={{posts, addPost, removePost, editPost}}>
+          <Routes />
+        </PostContext.Provider>
     </div>
   );
 }

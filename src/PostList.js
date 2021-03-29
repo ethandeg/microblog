@@ -1,6 +1,8 @@
 import PostPreview from "./PostPreview"
-const PostList = ({posts}) => {
-
+import {useContext} from "react"
+import PostContext from "./contexts/postContext"
+const PostList = () => {
+    const {posts} = useContext(PostContext)
 
     return (
         <>

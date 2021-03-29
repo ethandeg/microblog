@@ -5,9 +5,9 @@ import HomePage from "./HomePage"
 const Routes = ({addPost, posts, removePost}) => {
     return (
         <Switch>
-            <Route exact path ="/"> <HomePage posts={posts}/></Route>
-            <Route exact path = '/new' > <NewPost addPost={addPost}/></Route>
-            <Route exact path = "/:postId"> <Post posts={posts} removePost={removePost}/></Route>
+            <Route exact path ="/"> <HomePage /></Route>
+            <Route exact path = '/new' > <NewPost /></Route>
+            <Route exact path = "/:postId"> <Post /></Route>
         </Switch>
     )
 }

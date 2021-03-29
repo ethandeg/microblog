@@ -1,7 +1,9 @@
-import {useState} from "react"
+import {useState, useContext} from "react"
 import {Link, useHistory} from 'react-router-dom'
+import PostContext from "./contexts/postContext"
 
-const NewPost = ({addPost}) => {
+const NewPost = () => {
+    const {addPost} = useContext(PostContext)
     const history = useHistory()
     const INITIAL_STATE = {title:'', description: '', body: ''}
     const [formData, setFormData] = useState(INITIAL_STATE)
