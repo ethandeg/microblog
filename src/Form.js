@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {Link, useHistory} from "react-router-dom"
-const Form = ({submit, id}) => {
+const Form = ({submit, id, title='', description='', body=''}) => {
     const history = useHistory()
-    const INITIAL_STATE = {title:'', description: '', body: ''}
+    const INITIAL_STATE = {title, description, body}
     const [formData, setFormData] = useState(INITIAL_STATE)
     const handleChange = e => {
         const {name, value} = e.target;
@@ -21,7 +21,7 @@ const Form = ({submit, id}) => {
         <div className="container mt-5">
             <div className="card">
                 <div className="card-body">
-                    <h2 className='card-title text-center'>Add a New Post</h2>
+                    <h2 className='card-title text-center'>{id ? "Edit Post": "Add a New Post"}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="title">Title:</label>
