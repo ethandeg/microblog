@@ -4,9 +4,12 @@ import "./Header.css"
 const Header = () => {
     return (
         <header className ="header">
-            <h1>Microblog!</h1>
-            <Link to="/">Blog</Link>
-            <Link to="/new">Add a New Post</Link>
+`            <div className="container mt-5 text-center">
+                <h1 className="display-1 text-primary">Microblog!</h1>
+
+                <Link className="btn btn-lg btn-outline-primary" to="/">Blog</Link>  <Link className="btn btn-lg btn-outline-success" to="/new">Add a New Post</Link>`
+
+            </div>
         </header>
     )
 }

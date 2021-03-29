@@ -1,26 +1,5 @@
-import {useState} from "react"
-import {Link, useHistory} from 'react-router-dom'
-
-const NewPost = ({addPost}) => {
-    const history = useHistory()
-    const INITIAL_STATE = {title:'', description: '', body: ''}
-    const [formData, setFormData] = useState(INITIAL_STATE)
-    const handleChange = e => {
-        const {name, value} = e.target;
-        setFormData(formData => ({
-            ...formData,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(formData)
-        addPost(formData)
-        setFormData(INITIAL_STATE)
-        history.push("/")
-    }
-
+import {Link} from "react-router-dom"
+const EditPost = () => {
     return (
         <div className="container mt-5">
             <div className="card">
@@ -48,7 +27,6 @@ const NewPost = ({addPost}) => {
 
             </div>
         </div>
-    )
 }
 
-export default NewPost
+export default EditPost

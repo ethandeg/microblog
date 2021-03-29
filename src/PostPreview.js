@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom"
 const PostPreview = ({post}) => {
     return (
-        <div className="col-6">
+        <div className="col-6 my-3">
             <div className="card">
                 <div className="card-body">
                     <h5 className="card-title">{post.title}</h5>
