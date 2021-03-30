@@ -29,10 +29,16 @@ function App() {
     setComments(comments.filter(comment => comment.id !== commentId))
   }
 
+  const addComment = (newComment, postId) => {
+    newComment.id = uuidv4()
+    newComment.postId = postId
+    setComments(comment => [...comment, newComment])
+  }
+
   return (
     <div className="App">
       <Header />
-      <PostContext.Provider value={{ posts, addPost, removePost, editPost, comments, setComments, removeComment }}>
+      <PostContext.Provider value={{ posts, addPost, removePost, editPost, comments, setComments, removeComment, addComment }}>
         <Routes />
       </PostContext.Provider>
     </div>

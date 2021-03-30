@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import PostContext from "./contexts/postContext"
 import Form from "./Form"
 import Comment from "./Comment"
+import NewCommentForm from "./NewCommentForm"
 const Post = () => {
     const history = useHistory()
     const { posts, removePost, editPost, comments } = useContext(PostContext)
@@ -37,7 +38,7 @@ const Post = () => {
                             <p className="card-text fs-5">{post.body}</p>
                         </div>
                     </div>
-                    <button className="btn btn-primary my-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{theseComments.length} Comments</button>
+                    <button className="btn btn-primary my-3" style={{ marginRight: "2rem" }} type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{theseComments.length} Comments</button>
                     <div className="collapse" id="collapseExample">
                         <div className="card card-body">
                             {theseComments.map(comment => (
@@ -46,6 +47,15 @@ const Post = () => {
                         </div>
                     </div>
 
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCollapse" aria-expanded="false" aria-controls="addCollapse">
+                        Add Comment
+                    </button>
+
+                    <div class="collapse" id="addCollapse">
+                        <div class="card card-body">
+                            <NewCommentForm postId={postId} />
+                        </div>
+                    </div>
                 </div>
 
                 :
