@@ -1,10 +1,11 @@
-import { useState, useContext } from "react"
-import PostContext from "./contexts/postContext"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { addComment } from "./actions"
 
 const NewCommentForm = ({ postId }) => {
     const INITIAL_STATE = { text: '' }
     const [formData, setFormData] = useState(INITIAL_STATE)
-    const { addComment } = useContext(PostContext)
+    const dispatch = useDispatch()
     const handleChange = e => {
         const { name, value } = e.target;
         setFormData(formData => ({
@@ -15,7 +16,8 @@ const NewCommentForm = ({ postId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addComment(formData, postId)
+        formData.postId = postId
+        dispatch(addComment(formData))
         setFormData(INITIAL_STATE)
     }
     return (

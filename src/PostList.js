@@ -1,18 +1,17 @@
 import PostPreview from "./PostPreview"
-import {useContext} from "react"
-import PostContext from "./contexts/postContext"
+import { useSelector } from "react-redux"
 const PostList = () => {
-    const {posts} = useContext(PostContext)
+    const posts = useSelector(store => store.posts)
 
     return (
         <>
-        <h1>Post List</h1>
-        <div className="row">
-            {posts.map(post => (
-                <PostPreview post={post} key={post.id}/>
-            ))}
-        </div>
-            </>
+            <h1>Post List</h1>
+            <div className="row">
+                {posts.map(post => (
+                    <PostPreview post={post} key={post.id} />
+                ))}
+            </div>
+        </>
     )
 }
 

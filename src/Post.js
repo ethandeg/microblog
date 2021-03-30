@@ -1,27 +1,38 @@
 import { useParams, useHistory } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
-import PostContext from "./contexts/postContext"
+import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import Form from "./Form"
 import Comment from "./Comment"
 import NewCommentForm from "./NewCommentForm"
+import { removePost, editPost } from "./actions"
 const Post = () => {
     const history = useHistory()
-    const { posts, removePost, editPost, comments } = useContext(PostContext)
+    const dispatch = useDispatch()
     const { postId } = useParams()
-    const post = posts.filter(post => post.id === postId)[0]
-    const theseComments = comments.filter(comment => comment.postId === postId)
+    const posts = useSelector(store => store.posts)
+    const post = posts.find(post => post.id === postId)
+    let comments = useSelector(store => store.comments)
+    comments = comments.filter(comment => comment.postId === postId)
     const [isFalse, setFalse] = useState(false)
+
+
     function remove(e) {
         e.preventDefault()
-        removePost(postId)
+        dispatch(removePost(post))
         history.push('/')
     }
+
+
 
     const formChange = () => {
         setFalse(isFalse === false ? true : false)
     }
 
 
+    function edit(data) {
+        data.id = postId
+        dispatch(editPost(data))
+    }
 
 
     return (
@@ -38,21 +49,21 @@ const Post = () => {
                             <p className="card-text fs-5">{post.body}</p>
                         </div>
                     </div>
-                    <button className="btn btn-primary my-3" style={{ marginRight: "2rem" }} type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{theseComments.length} Comments</button>
+                    <button className="btn btn-primary my-3" style={{ marginRight: "2rem" }} type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{comments.length} Comments</button>
                     <div className="collapse" id="collapseExample">
-                        <div className="card card-body">
-                            {theseComments.map(comment => (
+                        <div className="card card-body mb-3">
+                            {comments.map(comment => (
                                 <Comment comment={comment} postId={postId} key={comment.id} />
                             ))}
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCollapse" aria-expanded="false" aria-controls="addCollapse">
+                    <button className="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCollapse" aria-expanded="false" aria-controls="addCollapse">
                         Add Comment
                     </button>
 
-                    <div class="collapse" id="addCollapse">
-                        <div class="card card-body">
+                    <div className="collapse" id="addCollapse">
+                        <div className="card card-body">
                             <NewCommentForm postId={postId} />
                         </div>
                     </div>
@@ -64,7 +75,8 @@ const Post = () => {
 
             {isFalse
                 ?
-                <Form submit={editPost} id={post.id} title={post.title} description={post.description} body={post.body} />
+                <Form submit={edit} id={post.id} title={post.title} description={post.description} body={post.body} />
+
                 :
                 null
             }
