@@ -2,15 +2,22 @@ import logo from './logo.svg';
 import './App.css';
 import Header from "./Header"
 import Routes from "./Routes"
-import { useState } from "react"
-import { v4 as uuidv4 } from 'uuid';
-import PostContext from "./contexts/postContext"
+import {useEffect} from "react"
+import {getPostsFromAPI} from "./actionCreators"
+import {useDispatch} from "react-redux"
 
 
 function App() {
+  // function PostList({posts}) {
+  //   const dispatch = useDispatch();
+  
+  //   useEffect(() => {
+  //     dispatch(getPostsFromAPI())
+  //   }, [dispatch]);
 
-  // const [posts, setPosts] = useState([{ id: "test", title: "this is a test title", description: "see how description is also a test", body: "hello, world!" }])
+  // }
 
+  // PostList()
 
 
 
