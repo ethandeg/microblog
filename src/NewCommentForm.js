@@ -22,8 +22,12 @@ const NewCommentForm = ({ postId }) => {
     }
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" id="text" name="text" value={formData.text} onChange={handleChange} placeholder="Comment Text" />
-            <button className="btn btn-sm btn-primary">+</button>
+            <div className="col-3">
+                <div className="input-group">
+                    <input style={{ border: "none" }} className="form-control" type="text" id="text" name="text" value={formData.text} onChange={handleChange} placeholder="Comment Text" />
+                    <button className="btn btn-sm btn-primary">+</button>
+                </div>
+            </div>
         </form>
     )
 }
