@@ -1,4 +1,4 @@
-import { ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST, LOAD_POSTS, LOAD_FULL_POST } from "./actionTypes"
+import { VOTE, ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST, LOAD_POSTS, LOAD_FULL_POST } from "./actionTypes"
 import axios from "axios"
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
@@ -6,13 +6,12 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 export function addComment(d, postId) {
     return async function(dispatch){
         const {data} = await axios.post(`${BASE_URL}/posts/${postId}/comments`, d)
-        console.log(postId)
         dispatch(gotComment(data, postId))
     }
 }
 
     function gotComment(payload, postId){
-        console.log(postId)
+
     return {
         type: ADD_COMMENT,
         payload,
@@ -23,7 +22,6 @@ export function addComment(d, postId) {
 export function addPost(data) {
     return async function (dispatch) {
         const res = await axios.post(`${BASE_URL}/posts`, data)
-        console.log(res)
         if (res.status === 201) {
             dispatch(newPost(res.data))
         }
@@ -40,7 +38,7 @@ function newPost(payload) {
 
 export function removeComment(d, postId){
     return async function(dispatch){
-        const res = await axios.delete(`${BASE_URL}/posts/${postId}/comments/${d.id}`)
+        await axios.delete(`${BASE_URL}/posts/${postId}/comments/${d.id}`)
         dispatch(deleteComment(d, postId))
     }
 }
@@ -56,8 +54,7 @@ export function removeComment(d, postId){
 
 export function removePost(data) {
     return async function (dispatch) {
-        const res = await axios.delete(`${BASE_URL}/posts/${data.id}`)
-        console.log(res)
+        await axios.delete(`${BASE_URL}/posts/${data.id}`)
         dispatch(deletePost(data))
     }
 }
@@ -72,7 +69,6 @@ function deletePost(payload) {
 export function editPost(data){
     return async function(dispatch) {
         const res = await axios.put(`${BASE_URL}/posts/${data.id}`, data)
-        console.log(res)
         dispatch(changePost(res.data))
     }
 }
@@ -97,10 +93,7 @@ function gotPosts(posts) {
     return { type: LOAD_POSTS, payload: posts }
 }
 
-// export async function consolePosts() {
-//     let res = await axios.get(`${BASE_URL}/posts/1`)
-//     console.log(res)
-// }
+
 
 export function loadFullPost(id) {
     return async function (dispatch) {
@@ -110,6 +103,24 @@ export function loadFullPost(id) {
 
 }
 
+
 function gotPost(post) {
     return { type: LOAD_FULL_POST, payload: post }
+}
+
+
+export function vote(id, direction){
+    return async function(dispatch){
+        const {data} = await axios.post(`${BASE_URL}/posts/${id}/vote/${direction}`)
+        dispatch(gotVote(data, id)) 
+    }
+
+}
+
+function gotVote(payload, postId){
+    return {
+        type: VOTE,
+        payload,
+        postId: Number(postId)
+    }
 }

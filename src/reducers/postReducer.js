@@ -1,5 +1,4 @@
-import { ADD_POST, ADD_COMMENT, REMOVE_POST, REMOVE_COMMENT, EDIT_POST, LOAD_POSTS, LOAD_FULL_POST } from "../actionTypes"
-import { v4 as uuidv4 } from 'uuid';
+import {VOTE, ADD_POST, ADD_COMMENT, REMOVE_POST, REMOVE_COMMENT, EDIT_POST, LOAD_POSTS, LOAD_FULL_POST } from "../actionTypes"
 const INITIAL_STATE = { posts: [], titles: [] }
 function postReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -43,6 +42,25 @@ function postReducer(state = INITIAL_STATE, action) {
 
         case LOAD_FULL_POST:
             return { ...state, posts: [...state.posts, action.payload] }
+        
+        case VOTE:
+            const voteTitle = state.titles.map(t => {
+                if(t.id === action.postId){
+                    return {...t, votes: action.payload.votes}
+                }
+                return t
+            })
+            voteTitle.votes = action.payload.votes
+            const votePost = state.posts.map(p => {
+                if(p.id === action.postId){
+
+                    return {...p, votes: action.payload.votes}
+                }
+
+                return p
+            })
+                votePost.votes = action.payload.votes
+                return {...state, posts: votePost, titles: voteTitle}
 
         default:
             return state
