@@ -10,7 +10,7 @@ import { consolePosts, loadPosts } from "./actions"
 function App() {
 
 
-	consolePosts()
+	// consolePosts()
 
 
 

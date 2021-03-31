@@ -17,6 +17,7 @@ function postReducer(state = INITIAL_STATE, action) {
             return { ...state, comments: state.comments.filter(comment => comment.id !== action.payload.id) }
 
         case EDIT_POST:
+
             const { description, body, title } = action.payload
             const posts = state.posts.map(post => {
                 if (post.id === action.payload.id) {
@@ -24,7 +25,14 @@ function postReducer(state = INITIAL_STATE, action) {
                 }
                 return post
             })
-            return { ...state, posts }
+            const titles = state.titles.map(t => {
+                if(t.id === action.payload.id){
+                    return {...t, description, title}
+                }
+                return t
+            })
+
+            return { ...state, titles: titles, posts: posts }
 
         case LOAD_POSTS:
             return { ...state, titles: action.payload }

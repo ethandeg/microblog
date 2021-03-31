@@ -35,12 +35,7 @@ export function removeComment(payload) {
     }
 }
 
-// export function removePost(payload) {
-//     return {
-//         type: REMOVE_POST,
-//         payload
-//     }
-// }
+
 export function removePost(data) {
     return async function (dispatch) {
         const res = await axios.delete(`${BASE_URL}/posts/${data.id}`)
@@ -56,9 +51,17 @@ function deletePost(payload) {
     }
 }
 
+export function editPost(data){
+    return async function(dispatch) {
+        const res = await axios.put(`${BASE_URL}/posts/${data.id}`, data)
+        console.log(res)
+        dispatch(changePost(res.data))
+    }
+}
 
 
-export function editPost(payload) {
+
+    function changePost(payload) {
     return {
         type: EDIT_POST,
         payload
@@ -76,10 +79,10 @@ function gotPosts(posts) {
     return { type: LOAD_POSTS, payload: posts }
 }
 
-export async function consolePosts() {
-    let res = await axios.get(`${BASE_URL}/posts/1`)
-    console.log(res)
-}
+// export async function consolePosts() {
+//     let res = await axios.get(`${BASE_URL}/posts/1`)
+//     console.log(res)
+// }
 
 export function loadFullPost(id) {
     return async function (dispatch) {
