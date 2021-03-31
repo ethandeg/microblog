@@ -11,7 +11,11 @@ function postReducer(state = INITIAL_STATE, action) {
             return { ...state, posts: state.posts.filter(post => post.id !== action.payload.id), titles: state.titles.filter(title => title.id !== action.payload.id) }
 
         case ADD_COMMENT:
-            return { ...state, comments: [...state.comments, { ...action.payload, id: uuidv4() }] }
+            console.log(action)
+            const post = state.posts.find(p => p.id === action.postId)
+            console.log(post)
+            post.comments = [...post.comments, action.payload]
+            return { ...state, posts: [...state.posts, post] }
 
         case REMOVE_COMMENT:
             return { ...state, comments: state.comments.filter(comment => comment.id !== action.payload.id) }

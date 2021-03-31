@@ -4,13 +4,13 @@ import Header from "./Header"
 import Routes from "./Routes"
 import { useEffect } from "react"
 import { useDispatch, } from "react-redux"
-import { consolePosts, loadPosts } from "./actions"
+import {  loadPosts } from "./actions"
 
 
 function App() {
 
 
-	// consolePosts()
+	// consoleAddComment()
 
 
 

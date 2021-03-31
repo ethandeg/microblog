@@ -16,8 +16,8 @@ const NewCommentForm = ({ postId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        formData.postId = postId
-        dispatch(addComment(formData))
+        console.log(postId)
+        dispatch(addComment(formData, postId))
         setFormData(INITIAL_STATE)
     }
     return (

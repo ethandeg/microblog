@@ -1,10 +1,31 @@
 import { ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST, LOAD_POSTS, LOAD_FULL_POST } from "./actionTypes"
 import axios from "axios"
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
-export function addComment(payload) {
+
+//params for post_id
+//body for text
+// export function addComment(data) {
+//     return async function(dispatch) {
+//         const 
+//     }
+// }
+
+
+    //res.data {id, text}
+export function addComment(d, postId) {
+    return async function(dispatch){
+        const {data} = await axios.post(`${BASE_URL}/posts/${postId}/comments`, d)
+        console.log(postId)
+        dispatch(gotComment(data, postId))
+    }
+}
+
+    function gotComment(payload, postId){
+        console.log(postId)
     return {
         type: ADD_COMMENT,
-        payload
+        payload,
+        postId: Number(postId)
     }
 }
 
