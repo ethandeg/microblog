@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux"
 import { removeComment } from "./actions"
-const Comment = ({ comment }) => {
+const Comment = ({ comment, postId }) => {
     const dispatch = useDispatch()
     const deleteComment = () => {
-        dispatch(removeComment(comment))
+        dispatch(removeComment(comment, postId))
     }
     return (
         <p className="fs-4" style={{ paddingRight: "4rem" }}>

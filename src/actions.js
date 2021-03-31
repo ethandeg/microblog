@@ -2,16 +2,7 @@ import { ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST, LOAD_POS
 import axios from "axios"
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 
-//params for post_id
-//body for text
-// export function addComment(data) {
-//     return async function(dispatch) {
-//         const 
-//     }
-// }
 
-
-    //res.data {id, text}
 export function addComment(d, postId) {
     return async function(dispatch){
         const {data} = await axios.post(`${BASE_URL}/posts/${postId}/comments`, d)
@@ -47,12 +38,18 @@ function newPost(payload) {
     }
 }
 
+export function removeComment(d, postId){
+    return async function(dispatch){
+        const res = await axios.delete(`${BASE_URL}/posts/${postId}/comments/${d.id}`)
+        dispatch(deleteComment(d, postId))
+    }
+}
 
-
-export function removeComment(payload) {
+ function deleteComment(payload, postId) {
     return {
         type: REMOVE_COMMENT,
-        payload
+        payload,
+        postId: Number(postId)
     }
 }
 
