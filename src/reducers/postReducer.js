@@ -1,6 +1,6 @@
 import { ADD_POST, ADD_COMMENT, REMOVE_POST, REMOVE_COMMENT, EDIT_POST, LOAD_POSTS, LOAD_FULL_POST } from "../actionTypes"
 import { v4 as uuidv4 } from 'uuid';
-const INITIAL_STATE = { posts: [], comments: [], titles: [] }
+const INITIAL_STATE = { posts: [], titles: [] }
 function postReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case ADD_POST:
@@ -31,7 +31,7 @@ function postReducer(state = INITIAL_STATE, action) {
             return { ...state, titles: action.payload }
 
         case LOAD_FULL_POST:
-            return { ...state, posts: [...posts, action.payload] }
+            return { ...state, posts: [...state.posts, action.payload] }
 
         default:
             return state

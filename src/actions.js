@@ -55,6 +55,7 @@ export async function consolePosts() {
 export function loadFullPost(id) {
     return async function (dispatch) {
         const { data } = await axios.get(`${BASE_URL}/posts/${id}`)
+        console.log(data)
         dispatch(gotPost(data))
     }
 

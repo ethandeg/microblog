@@ -4,16 +4,20 @@ import { useSelector, useDispatch } from "react-redux"
 import Form from "./Form"
 import Comment from "./Comment"
 import NewCommentForm from "./NewCommentForm"
-import { removePost, editPost } from "./actions"
+import { removePost, editPost, loadFullPost } from "./actions"
 const Post = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const { postId } = useParams()
     const posts = useSelector(store => store.posts)
-    const post = posts.find(post => post.id === Number(postId)) ? posts.find(post => post.id === Number(postId)) : posts.find(post => post.id === postId)
-    use
-    let comments = useSelector(store => store.comments)
-    comments = comments.filter(comment => comment.postId === postId)
+    let post = posts.find(post => post.id === Number(postId)) ? posts.find(post => post.id === Number(postId)) : posts.find(post => post.id === postId)
+    useEffect(() => {
+        if (!post) {
+            dispatch(loadFullPost(postId))
+        } else {
+            return null
+        }
+    }, [post, dispatch, postId])
     const [isFalse, setFalse] = useState(false)
 
 
@@ -50,10 +54,10 @@ const Post = () => {
                             <p className="card-text fs-5">{post.body}</p>
                         </div>
                     </div>
-                    <button className="btn btn-primary my-3" style={{ marginRight: "2rem" }} type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{comments.length} Comments</button>
+                    <button className="btn btn-primary my-3" style={{ marginRight: "2rem" }} type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">{post.comments.length} Comments</button>
                     <div className="collapse" id="collapseExample">
                         <div className="card card-body mb-3">
-                            {comments.map(comment => (
+                            {post.comments.map(comment => (
                                 <Comment comment={comment} postId={postId} key={comment.id} />
                             ))}
                         </div>
