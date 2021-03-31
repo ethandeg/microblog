@@ -4,12 +4,11 @@ const INITIAL_STATE = { posts: [], titles: [] }
 function postReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case ADD_POST:
-            return { ...state, posts: [...state.posts, { ...action.payload, id: uuidv4() }] }
-        // //create a copy
-        // //two properties of the same name will cause issue
-        // //return the new state
+            return { ...state, posts: [...state.posts, { ...action.payload, comments: [] }], titles: [...state.titles, { id: action.payload.id, title: action.payload.title, description: action.payload.description }] }
+
         case REMOVE_POST:
-            return { ...state, posts: state.posts.filter(post => post.id !== action.payload.id) }
+
+            return { ...state, posts: state.posts.filter(post => post.id !== action.payload.id), titles: state.titles.filter(title => title.id !== action.payload.id) }
 
         case ADD_COMMENT:
             return { ...state, comments: [...state.comments, { ...action.payload, id: uuidv4() }] }

@@ -8,12 +8,25 @@ export function addComment(payload) {
     }
 }
 
-export function addPost(payload) {
+export function addPost(data) {
+    return async function (dispatch) {
+        const res = await axios.post(`${BASE_URL}/posts`, data)
+        console.log(res)
+        if (res.status === 201) {
+            dispatch(newPost(res.data))
+        }
+
+    }
+}
+
+function newPost(payload) {
     return {
         type: ADD_POST,
         payload
     }
 }
+
+
 
 export function removeComment(payload) {
     return {
@@ -22,12 +35,28 @@ export function removeComment(payload) {
     }
 }
 
-export function removePost(payload) {
+// export function removePost(payload) {
+//     return {
+//         type: REMOVE_POST,
+//         payload
+//     }
+// }
+export function removePost(data) {
+    return async function (dispatch) {
+        const res = await axios.delete(`${BASE_URL}/posts/${data.id}`)
+        console.log(res)
+        dispatch(deletePost(data))
+    }
+}
+
+function deletePost(payload) {
     return {
         type: REMOVE_POST,
         payload
     }
 }
+
+
 
 export function editPost(payload) {
     return {
@@ -55,7 +84,6 @@ export async function consolePosts() {
 export function loadFullPost(id) {
     return async function (dispatch) {
         const { data } = await axios.get(`${BASE_URL}/posts/${id}`)
-        console.log(data)
         dispatch(gotPost(data))
     }
 
