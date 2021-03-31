@@ -1,5 +1,5 @@
 import { useParams, useHistory } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Form from "./Form"
 import Comment from "./Comment"
@@ -10,7 +10,8 @@ const Post = () => {
     const dispatch = useDispatch()
     const { postId } = useParams()
     const posts = useSelector(store => store.posts)
-    const post = posts.find(post => post.id === postId)
+    const post = posts.find(post => post.id === Number(postId)) ? posts.find(post => post.id === Number(postId)) : posts.find(post => post.id === postId)
+    use
     let comments = useSelector(store => store.comments)
     comments = comments.filter(comment => comment.postId === postId)
     const [isFalse, setFalse] = useState(false)

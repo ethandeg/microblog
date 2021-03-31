@@ -1,5 +1,6 @@
-import { ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST } from "./actionTypes"
-
+import { ADD_COMMENT, ADD_POST, EDIT_POST, REMOVE_COMMENT, REMOVE_POST, LOAD_POSTS, LOAD_FULL_POST } from "./actionTypes"
+import axios from "axios"
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
 export function addComment(payload) {
     return {
         type: ADD_COMMENT,
@@ -33,4 +34,32 @@ export function editPost(payload) {
         type: EDIT_POST,
         payload
     }
+}
+
+export function loadPosts() {
+    return async function (dispatch) {
+        const { data } = await axios.get(`${BASE_URL}/posts`)
+        dispatch(gotPosts(data))
+    }
+}
+
+function gotPosts(posts) {
+    return { type: LOAD_POSTS, payload: posts }
+}
+
+export async function consolePosts() {
+    let res = await axios.get(`${BASE_URL}/posts/1`)
+    console.log(res)
+}
+
+export function loadFullPost(id) {
+    return async function (dispatch) {
+        const { data } = await axios.get(`${BASE_URL}/posts/${id}`)
+        dispatch(gotPost(data))
+    }
+
+}
+
+function gotPost(post) {
+    return { type: LOAD_FULL_POST, payload: post }
 }
